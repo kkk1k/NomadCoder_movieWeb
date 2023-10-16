@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+    <div id="root"></div>
+</body>
+<script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script type="text/babel">
+    const root = document.getElementById("root");
+    function App() {
+        const [amount, setAmount]= React.useState(0);
+        const [flipped, setFlipped] = React.useState(false);
+        // onChange가 없으면 input값 감지를 못함
+        const onChange = (event) => {
+            setAmount(event.target.value)
+        };
+        const reset = () => setAmount(0);
+        const onFlip = () => {
+            setFlipped((current) => !current);
+            reset();
+        }
+        return(
+        <div>
+            <div>
+                <h1>Super Converter </h1>
+                <label htmlFor="minutes">Minutes</label> {/* "for" 대신 "htmlFor" 사용 */}
+                <input value={flipped ? 60*amount :amount } id="minutes" placeholder="Minutes" type="number" onChange={onChange} disabled={flipped===true} />    
+            </div>
+            <div>
+                <label htmlFor="hours">Hours</label> {/* "for" 대신 "htmlFor" 사용 */}
+                <input value={flipped ? amount: Math.round(amount/60)} id ="hours" placeholder="Hours" type="number" onChange={onChange} disabled={flipped === false} />  
+                <button onClick={reset}>reset</button>
+                <button onClick={onFlip}>Flip</button>
+            </div>
+            
+            
+        </div>
+        );
+    }
+    ReactDOM.render(< App/>, root);
+</script>
+</html>
